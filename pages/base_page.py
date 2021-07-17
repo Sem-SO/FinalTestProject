@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException, NoAlertPresentExc
 from .locators import BasePageLocators
 
 
+
 class BasePage():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
@@ -14,10 +15,10 @@ class BasePage():
     def open(self):
         self.browser.get(self.url)
 
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-        login_link.click()
-        # return LoginPage(browser=self.browser, url=self.browser.current_url)  # переход на другую страницу
+    def go_to_page(self, how, what, page):
+        basket_link = self.browser.find_element(how, what)
+        basket_link.click()
+        return page(browser=self.browser, url=self.browser.current_url)
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
